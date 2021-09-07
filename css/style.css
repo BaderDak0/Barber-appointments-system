@@ -1,0 +1,57 @@
+
+
+
+.inpname{
+    width: 218px;
+    height: 28px;
+    margin: auto;
+
+
+}
+
+.formBox {
+    width: 360px;
+    /* height: 425px; */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: solid 2px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    z-index: 5;
+    display: none;
+}
+.screenBlur {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    opacity: 60%;
+    z-index: 1;
+}
+
+#loggin h2 {
+    font-weight: bold;
+    text-align: center;
+}
+#loggin h6 {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.flex{
+
+    display: flex;
+}
+
+.submite-cancel {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
