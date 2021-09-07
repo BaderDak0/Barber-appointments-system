@@ -76,10 +76,8 @@
 						<li class="active"><a href="#home">Home</a></li>
 						<li><a href="#about">About</a></li>
 						<li><a href="#service">Service</a></li>
-						<li><a href="#ourteam">Team</a></li>
 						<li><a href="#gallery">Gallery</a></li>
 						<li><a href="#pricing">Pricing</a></li>
-						<li><a href="#testimonial">Testimonial</a></li>
 						<li><a href="#Book">Book</a></li>
 						<li><a href="#" id="loginn">Login</a></li>
 
@@ -92,23 +90,64 @@
 	<!-- Header Section Ends-->
 
 	<!-- Banner Section Starts -->
-	<form id="loggin" class="formBox" action="./admin.html" method="POST">
-		<h2 id="formTitle">Login</h2>
+	<!-- login form  -->
+	<form id="loggin" class="formBox formBox2" action="./admin.html" method="POST">
+	<h2 class="contact-form-title"> כניסה</h2>
 		<div class="form-group flex">
 			<span>user name:</span>
 			<input type="text" class="form-control inpname" placeholder="Enter Your user name" name="name" required />
 		</div>
 		<div class="form-group flex">
-			
-		<span>password:</span>
+
+			<span>password:</span>
 			<input type="password" class="form-control inpname" placeholder="Enter Your password" name="name" required />
 		</div>
-			<div class="submite-cancel">
-                        <button type="button" class="btn btn-dark cancelForm">Cancel</button>
-                        <div class="vertical-line-1"></div>
-                        <input type="submit" value="Add" class="btn btn-success"></input>
-                    </div>
+		<div class="form-group">
+			<input type="submit" class="btn-contact" value="המשך" />
+		</div>
 	</form>
+	<!-- end login form  -->
+
+	<!-- booking form  -->
+	<form id="booking" class="formBox formBox1" action="#" method="POST">
+		<h2 class="contact-form-title">הזמנה חדשה</h2>
+
+		<label>מספר טלפון</label>
+		
+		<div class="form-group">
+			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
+		</div>
+		
+
+
+		<div class="form-group">
+			<input type="submit" class="btn-contact" value="המשך" />
+		</div>
+		<div class="form-group">
+			<a href="#">לקוח חדש לחץ כאן</a>
+		</div>
+	</form>
+	<!-- end booking  -->
+
+
+	<!-- start calendar -->
+
+	<!-- <form id="cale" class="formBox" action="#" method="POST">
+		<h2 class="contact-form-title">Book Now</h2>
+
+		<div class="form-group">
+			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
+		</div>
+		<div class="submite-cancel">
+			<button type="button" class="btn btn-dark cancelForm">Cancel</button>
+			<div class="vertical-line-1"></div>
+			<div class="form-group">
+				<input type="submit" class="btn-contact" value="Submit" />
+			</div>
+		</div>
+	</form> -->
+
+	<!-- end calendar -->
 	<section class="banner" id="home">
 		<div class="container">
 			<div class="row">
@@ -116,35 +155,54 @@
 					<div class="header-banner">
 						<img src="images/logo.png" alt="Logo" />
 						<p>Discover Your Style & Beauty</p>
-						<h3>Your new Perfect <br />Style & Design</h3>
+						<h3> <b>Zahe Daka</b> <br />Style & Design</h3>
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-4">
-					<div class="banner-info-single">
+					<div class="banner-info-single text">
 						<div class="icon-box"><i class="fa fa-clock-o"></i></div>
-						<h3>Open Time</h3>
-						<p>Monday – Friday: 09:00 – 22:00</p>
+						<h3>שעות פתיחה</h3>
+						<p>ראשון – שבת: 11:30 – 22:00</p>
+						<p>שלישי סגור</p>
 					</div>
 				</div>
 
 				<div class="col-md-4">
-					<div class="banner-info-single">
+					<div class="banner-info-single text">
 						<div class="icon-box"><i class="fa fa-map-marker"></i></div>
-						<h3>Our Location</h3>
-						<p>100 Mainstreet Center, Sydney</p>
+						<h3>מקום</h3>
+						<p> באקה אל גרביה</p>
+						<p>כביש ראשי</p>
+						<p></p>
 					</div>
 				</div>
 
 				<div class="col-md-4">
-					<div class="banner-info-single">
+					<div class="banner-info-single text">
 						<div class="icon-box"><i class="fa fa-phone"></i></div>
-						<h3>Book Now</h3>
-						<p>+208 333 9296</p>
+						<h3>מספר טלפון</h3>
+						<p>0506655919</p>
+						<p>לבירורים</p>
 					</div>
 				</div>
+				<a href="#" id="boking">
+					<div class="col-md-4">
+						<div class="banner-info-single text">
+
+							<div class="icon-box"><i class="fa  fa-calendar"></i></div>
+							<h3> הזמנת תור</h3>
+							<p class='viss'>0506655919</p>
+
+							<p class='viss'>לבירורים</p>
+
+
+						</div>
+					</div>
+				</a>
+
 			</div>
 		</div>
 
@@ -208,9 +266,9 @@
 							</div>
 						</div>
 
-						<h3>Beard Trim</h3>
-						<p>Lior sit amet, consectetur adipisg elit,sed do eiusmod tempor incdunt ut</p>
-						<h5>Time : 30 Min</h5>
+						<h3>עיצוב שיער</h3>
+						<p>כל סוגי העיצובים המודרני </p>
+
 					</div>
 				</div>
 
@@ -222,25 +280,12 @@
 							</div>
 						</div>
 
-						<h3>Moustache Trim</h3>
-						<p>Lior sit amet, consectetur adipisg elit,sed do eiusmod tempor incdunt ut</p>
-						<h5>Time : 30 Min</h5>
+						<h3>עיצוב זקן</h3>
+						<p>עיצוב זקן באופן מקצועי</p>
+
 					</div>
 				</div>
 
-				<div class="col-md-3 col-sm-6">
-					<div class="service-single">
-						<div class="icon-box-outer">
-							<div class="icon-box">
-								<i class="flaticon-scissors"></i>
-							</div>
-						</div>
-
-						<h3>Clipper Cut</h3>
-						<p>Lior sit amet, consectetur adipisg elit,sed do eiusmod tempor incdunt ut</p>
-						<h5>Time : 30 Min</h5>
-					</div>
-				</div>
 
 				<div class="col-md-3 col-sm-6">
 					<div class="service-single">
@@ -250,93 +295,31 @@
 							</div>
 						</div>
 
-						<h3>Facial / Massage</h3>
-						<p>Lior sit amet, consectetur adipisg elit,sed do eiusmod tempor incdunt ut</p>
-						<h5>Time : 30 Min</h5>
+						<h3>טיפול פנים</h3>
+						<p>ניקוי פנים/מסכות/חומרים טבעיים</p>
+
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="service-single">
+						<div class="icon-box-outer">
+							<div class="icon-box">
+								<i class="flaticon-scissors"></i>
+							</div>
+						</div>
+
+						<h3>מוצרי יופי</h3>
+						<p>בשמים/מוצרי פנים/מוצרי שיער</p>
+
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</section>
 	<!-- Services section ends -->
 
-	<!-- Our Team section starts -->
-	<section class="ourteam" id="ourteam">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="main-title">
-						<h2>Expert & Stylish Team</h2>
-					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="team-box">
-						<figure>
-							<img src="images/team-1.png" alt="" />
-						</figure>
-
-						<div class="team-entry">
-							<p>Hair cut & Color Specialist</p>
-							<h3>Alan Black</h3>
-							<div class="team-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-pinterest-p"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="team-box">
-						<figure>
-							<img src="images/team-2.png" alt="" />
-						</figure>
-
-						<div class="team-entry">
-							<p>Fasicial & Massage Expert</p>
-							<h3>Malik Green</h3>
-							<div class="team-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-pinterest-p"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="team-box">
-						<figure>
-							<img src="images/team-3.png" alt="" />
-						</figure>
-
-						<div class="team-entry">
-							<p>Expert Barber</p>
-							<h3>John Smith</h3>
-							<div class="team-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-pinterest-p"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-	</section>
-	<!-- Our Team section ends -->
 
 	<!-- Photo Gallery section starts -->
 	<section class="gallery" id="gallery">
@@ -482,46 +465,30 @@
 					</div>
 
 					<div class="price-list">
-						<div class="price-item">Hair Cut</div>
+						<div class="price-item">תספורת גברים</div>
 						<div class="price-line"></div>
-						<div class="price-amount">$50</div>
+						<div class="price-amount">20₪</div>
 					</div>
 
 					<div class="price-list">
-						<div class="price-item">Beard Trim</div>
+						<div class="price-item">תספורת ילדים</div>
 						<div class="price-line"></div>
-						<div class="price-amount">$24</div>
+						<div class="price-amount">25₪</div>
+					</div>
+
+
+					<div class="price-list">
+						<div class="price-item">טיפול פנים</div>
+						<div class="price-line"></div>
+						<div class="price-amount">50₪</div>
 					</div>
 
 					<div class="price-list">
-						<div class="price-item">Flat Top</div>
+						<div class="price-item">טיפול כללי</div>
 						<div class="price-line"></div>
-						<div class="price-amount">$64</div>
+						<div class="price-amount">100₪</div>
 					</div>
 
-					<div class="price-list">
-						<div class="price-item">Hairstyle</div>
-						<div class="price-line"></div>
-						<div class="price-amount">$48</div>
-					</div>
-
-					<div class="price-list">
-						<div class="price-item">Hot Shave</div>
-						<div class="price-line"></div>
-						<div class="price-amount">$18</div>
-					</div>
-
-					<div class="price-list">
-						<div class="price-item">Outline</div>
-						<div class="price-line"></div>
-						<div class="price-amount">$35</div>
-					</div>
-
-					<div class="price-list">
-						<div class="price-item">Line Up</div>
-						<div class="price-line"></div>
-						<div class="price-amount">$30</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -529,7 +496,7 @@
 	<!-- Pricing Section ends -->
 
 	<!-- Testimonial section starts -->
-	<section class="testimonial" id="testimonial">
+	<!-- <section class="testimonial" id="testimonial">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -540,9 +507,9 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-12">
-					<!-- Header slider starts -->
-					<div class="owl-carousel owl-theme testimonial-slider" id="testimonial-slider">
+				<div class="col-md-12"> -->
+	<!-- Header slider starts -->
+	<!-- <div class="owl-carousel owl-theme testimonial-slider" id="testimonial-slider">
 						<div class="item">
 							<div class="testimonial-single">
 								<div class="icon-box">
@@ -610,16 +577,16 @@
 						</div>
 
 
-					</div>
-					<!-- Header slider ends -->
-				</div>
+					</div> -->
+	<!-- Header slider ends -->
+	<!-- </div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<!-- Testimonial section ends -->
 
 	<!-- Contactus section starts -->
-	<section class="contactus" id="Book">
+	<!-- <section class="contactus" id="Book">
 		<div class="container-fluid">
 			<div class="row no-pad">
 				<div class="col-md-4">
@@ -644,7 +611,7 @@
 						</form>
 
 					</div>
-				</div>
+				</div> -->
 
 				<!-- <div class="col-md-8">
 					<div class="google-map">
@@ -670,7 +637,8 @@
 					</div>
 
 					<div class="site-info">
-						<p>Copyright &copy; Untitled. All rights reserved. Design By <a href="https://awaikenthemes.com/" target="_blank">Awaiken Theme</a> Images <a href="https://unsplash.com/" target="_blank">Unsplash</a>, <a href="https://pixabay.com/" target="_blank">Pixabay</a>, <a href="http://www.freepik.com" target="_blank">Freepik</a>, Icon <a href="https://www.flaticon.com/" target="_blank">Flaticon</a></p>
+						<p>Copyright &copy; Bader Daka & Adham Jaber 2021</p>
+						<!-- <p>Copyright &copy; Untitled. All rights reserved. Design By <a href="https://awaikenthemes.com/" target="_blank">Awaiken Theme</a> Images <a href="https://unsplash.com/" target="_blank">Unsplash</a>, <a href="https://pixabay.com/" target="_blank">Pixabay</a>, <a href="http://www.freepik.com" target="_blank">Freepik</a>, Icon <a href="https://www.flaticon.com/" target="_blank">Flaticon</a></p> -->
 					</div>
 
 					<div class="footer-menu">

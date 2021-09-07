@@ -22,6 +22,9 @@
     padding: 10px 20px;
     z-index: 5;
     display: none;
+    text-align: center;
+    background-color: #be9342;
+    border-radius: 0%;
 }
 .screenBlur {
     display: none;
@@ -54,4 +57,37 @@
     width: 100%;
     justify-content: space-evenly;
     margin-top: 20px;
+}  
+.text p{
+
+font-size: 20px;
+
 }
+.viss{
+
+    visibility: hidden;
+}
+#booking{
+
+
+    background-color: #be9342;
+    border-radius: 0%;
+}
+
+#booking a{
+
+
+   color: black;
+   text-decoration: underline;
+}
+#booking label{
+
+
+    font-size: 22px;
+ }
+#booking a:hover{
+
+
+    color: red;
+ }
+ 
