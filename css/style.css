@@ -90,4 +90,49 @@ font-size: 20px;
 
     color: red;
  }
- 
+
+ .formBox3{
+
+    width: 360px;
+    /* height: 425px; */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: solid 2px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    z-index: 5;
+    display: none;
+    text-align: center;
+    background-color: #be9342;
+    border-radius: 0%;
+ }
+ .formBox4{
+
+    
+    height: 50%;
+    overflow: auto;
+ }
+ .time{
+
+    text-align: center;
+
+ }
+ .time:hover{
+
+    color: darkgoldenrod;
+
+ }
+
+ .buton{
+
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+ }

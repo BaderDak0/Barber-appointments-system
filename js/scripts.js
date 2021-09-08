@@ -1,6 +1,6 @@
 function logginForm() {
 
-  
+
     $('#toolsBlur').click();
     // $(':input[name="memberEmail"]').prop('disabled', false);;
     $('.formBox2').show();
@@ -10,60 +10,88 @@ function logginForm() {
 }
 function bookingForm() {
 
-  
+
+
     $('#toolsBlur').click();
     $('.formBox1').show();
-    // $('#booking').attr('action', './admin.html?status=login');
+    //  $('#booking').attr('action', './index.php?status=day');
     // $('#addMember').attr('action', './memberList.php?status=add');
     $('#formBlur').show();
+    // $('#timing').css("disblay","block");
 }
 
-function toolsClick() {
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-        content.style.border = "none";
-        content.style.maxHeight = null;
-        $('#toolsBlur').css('display', 'none');
-    } else {
-        content.style.border = "solid 2px";
-        content.style.borderTop = "none";
-        content.style.maxHeight = content.scrollHeight + "px";
-        $('#toolsBlur').css('display', 'block');
+function orderForm() {
+    if ($('#phone').val() != 0) {
+        $('.formBox1').hide();
+        $('#toolsBlur').click();
+        $('.formBox3').show();
+        // $('#booking').attr('action', './admin.html?status=login');
+        // $('#addMember').attr('action', './memberList.php?status=add');
+        $('#formBlur').show();
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(document).ready(function(){
+function clockForm() {
     
+        //  $('#timing').css('display', "block");
+        $('#toolsBlur').click();
+        $('.formBox4').show();
+        // $('#booking').attr('action', './admin.html?status=login');
+        // $('#addMember').attr('action', './memberList.php?status=add');
+        $('#formBlur').show();
     
-    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+$(document).ready(function () {
+
+
+
     $('#formBlur').click(function () {
         $('#formBlur').hide();
         $('.formBox').each(function () {
             $(this).hide();
         });
-        
+
     });
     $('.cancelForm').each(function () {
         $(this).click(function () {
             $('#formBlur').click();
         });
     });
+   
     $('#loginn').click(logginForm);
     $('#boking').click(bookingForm);
+    $('#order').click(orderForm);
+    $('.buton').click(function() {
+        clockForm();
+        // $(this).
+    });
 
-
+    // console.log(getParameterByName('state'));
+    if (getParameterByName('state')=='day'||getParameterByName('state')=='time') {
+        $('#formBlur').show();
+    }
+ 
 
 });

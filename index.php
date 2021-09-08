@@ -1,3 +1,17 @@
+<?php
+include "includes/db.php"
+
+
+
+
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,7 +106,7 @@
 	<!-- Banner Section Starts -->
 	<!-- login form  -->
 	<form id="loggin" class="formBox formBox2" action="./admin.html" method="POST">
-	<h2 class="contact-form-title"> כניסה</h2>
+		<h2 class="contact-form-title"> כניסה</h2>
 		<div class="form-group flex">
 			<span>user name:</span>
 			<input type="text" class="form-control inpname" placeholder="Enter Your user name" name="name" required />
@@ -109,19 +123,19 @@
 	<!-- end login form  -->
 
 	<!-- booking form  -->
-	<form id="booking" class="formBox formBox1" action="#" method="POST">
+	<form id="booking" class="formBox formBox1" action="./index.php?state=day" method="post">
 		<h2 class="contact-form-title">הזמנה חדשה</h2>
 
 		<label>מספר טלפון</label>
-		
+
 		<div class="form-group">
-			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
+			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value="" required>
 		</div>
-		
+
 
 
 		<div class="form-group">
-			<input type="submit" class="btn-contact" value="המשך" />
+			<input type="submit" id="order" class="btn-contact" value="המשך" />
 		</div>
 		<div class="form-group">
 			<a href="#">לקוח חדש לחץ כאן</a>
@@ -131,23 +145,109 @@
 
 
 	<!-- start calendar -->
+	<?php
+	if (isset($_GET["state"]) and $_GET["state"] == "day") {
 
-	<!-- <form id="cale" class="formBox" action="#" method="POST">
-		<h2 class="contact-form-title">Book Now</h2>
+		$query  = "SELECT * FROM orders WHERE phone='"
+			. $_POST["phone"] . "'";
 
-		<div class="form-group">
-			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
-		</div>
-		<div class="submite-cancel">
-			<button type="button" class="btn btn-dark cancelForm">Cancel</button>
-			<div class="vertical-line-1"></div>
-			<div class="form-group">
-				<input type="submit" class="btn-contact" value="Submit" />
-			</div>
-		</div>
-	</form> -->
+		$result = mysqli_query($connection, $query);
+		$row = mysqli_fetch_assoc($result);
 
+		if (is_array($row)) {
+			// echo '<div id="formBlur1" class="screenBlur style=" display: block;"></div>';
+			
+			$conter = 0;
+			$today = date("d.m");
+			$today1 = date("d");
+			echo '<form id="timing" class=" formBox" action="./index.php?state=time" method="POST" style=" display: block;">
+					<h2 class="contact-form-title"> בחר זמן</h2>
+					<label>' . $row["name"] . ' שלום </label> ';
+
+			while (++$conter != 7) {
+				echo ' 
+				<div class="banner-info-single text">
+				
+				<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+				
+				</div>
+				
+				';
+			}
+			echo '</form>';
+		}
+
+		// $dayofweek = date('w', strtotime($today));
+
+	}
+
+
+
+	?>
 	<!-- end calendar -->
+
+
+	<!-- pick a clock -->
+	<?php
+
+
+
+	if (isset($_GET["state"]) and $_GET["state"] == "time") {
+		$day = date("Y-m-d", strtotime($_POST["btn_day"]));
+
+		$query  = "SELECT * FROM orders WHERE datee='"
+			. $day . "'";
+
+		$result = mysqli_query($connection, $query);
+
+		$row = mysqli_fetch_assoc($result);
+
+
+		$dateTime = date('H:i', strtotime($row["timee"]));
+
+
+		$end_time = '22:00';
+		$conter = 0;
+		$start_time = "11:00:00";
+		$interval = DateInterval::createFromDateString('15 min');
+		$start = strtotime('11:00');
+		$end = strtotime('22:00');
+		echo  '	<form id="clock" class=" formBox formBox4" action="./index.php?state=add" method="post" style=" display: block;">
+		<h2 class="contact-form-title"> בחר שעה</h2> ';
+
+		for ($i = $start; $i <= $end; $i = $i + 15 * 60) {
+
+			$tmp = date('H:i', $i);
+
+
+			if ($tmp != $dateTime) {
+
+				echo ' 
+					<div class="banner-info-single text">
+					
+					<input type="submit" class="buton" name="btn" value="' .  $tmp . '">
+					
+					</div>
+					
+					';
+			
+			}
+			else if ($row = mysqli_fetch_assoc($result)){
+				
+				$dateTime = date('H:i', strtotime($row["timee"]));
+
+			}
+		}
+
+
+		echo	'</form>';
+	}
+
+
+	?>
+
+
+	<!-- end pick  -->
 	<section class="banner" id="home">
 		<div class="container">
 			<div class="row">
@@ -613,13 +713,13 @@
 					</div>
 				</div> -->
 
-				<!-- <div class="col-md-8">
+	<!-- <div class="col-md-8">
 					<div class="google-map">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d14767.723033070624!2d70.75848835!3d22.280612599999998!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1504611295336" height="600" style="border:0;width:100%;" allowfullscreen></iframe>
 					</div>
 				</div> -->
-			</div>
-		</div>
+	</div>
+	</div>
 	</section>
 	<!-- Contactus section ends -->
 
