@@ -89,7 +89,7 @@ $(document).ready(function () {
     });
 
     // console.log(getParameterByName('state'));
-    if (getParameterByName('state')=='day'||getParameterByName('state')=='time') {
+    if ((getParameterByName('state')=='day'||getParameterByName('state')=='time')&&$('.hid').val()==1) {
         $('#formBlur').show();
     }
  

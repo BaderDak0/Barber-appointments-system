@@ -144,9 +144,9 @@ include "includes/db.php"
 	<!-- end booking  -->
 
 
-	<!-- start calendar -->
+	<!-- day form -->
 	<?php
-	if (isset($_GET["state"]) and $_GET["state"] == "day") {
+	if (isset($_GET["state"]) and $_GET["state"] == "day" &&!empty($_POST["phone"])) {
 
 		$query  = "SELECT * FROM orders WHERE phone='"
 			. $_POST["phone"] . "'";
@@ -158,12 +158,12 @@ include "includes/db.php"
 			// echo '<div id="formBlur1" class="screenBlur style=" display: block;"></div>';
 			
 			$conter = 0;
-			$today = date("d.m");
+			$today = date("Y-m-d");
 			$today1 = date("d");
 			echo '<form id="timing" class=" formBox" action="./index.php?state=time" method="POST" style=" display: block;">
 					<h2 class="contact-form-title"> בחר זמן</h2>
 					<label>' . $row["name"] . ' שלום </label> ';
-
+					echo '<input type="hidden" class="hid"  value="1">';
 			while (++$conter != 7) {
 				echo ' 
 				<div class="banner-info-single text">
@@ -184,7 +184,7 @@ include "includes/db.php"
 
 
 	?>
-	<!-- end calendar -->
+	<!-- day form -->
 
 
 	<!-- pick a clock -->
@@ -192,18 +192,25 @@ include "includes/db.php"
 
 
 
-	if (isset($_GET["state"]) and $_GET["state"] == "time") {
-		$day = date("Y-m-d", strtotime($_POST["btn_day"]));
-
+	if (isset($_GET["state"]) and $_GET["state"] == "time"&&!empty($_POST["btn_day"])) {
+		// $day = date("Y-m-d", strtotime($_POST["btn_day"]));
+		// date("d-", datee);
+		
 		$query  = "SELECT * FROM orders WHERE datee='"
-			. $day . "'";
+			. $_POST["btn_day"] . "'";
 
+		// echo $day;	
 		$result = mysqli_query($connection, $query);
 
-		$row = mysqli_fetch_assoc($result);
+		if($row = mysqli_fetch_assoc($result))
+		{
 
+			$dateTime = date('H:i', strtotime($row["timee"]));
 
-		$dateTime = date('H:i', strtotime($row["timee"]));
+		}
+		else
+		$dateTime='10:00';
+
 
 
 		$end_time = '22:00';
@@ -214,7 +221,7 @@ include "includes/db.php"
 		$end = strtotime('22:00');
 		echo  '	<form id="clock" class=" formBox formBox4" action="./index.php?state=add" method="post" style=" display: block;">
 		<h2 class="contact-form-title"> בחר שעה</h2> ';
-
+			echo '<input type="hidden" class="hid"  value="1">';
 		for ($i = $start; $i <= $end; $i = $i + 15 * 60) {
 
 			$tmp = date('H:i', $i);
