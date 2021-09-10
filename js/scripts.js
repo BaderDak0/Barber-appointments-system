@@ -23,11 +23,11 @@ function bookingForm() {
 function orderForm() {
     if ($('#phone').val() != 0) {
         $('.formBox1').hide();
-        $('#toolsBlur').click();
-        $('.formBox3').show();
+        // $('#toolsBlur').click();
+        // $('.formBox3').show();
         // $('#booking').attr('action', './admin.html?status=login');
         // $('#addMember').attr('action', './memberList.php?status=add');
-        $('#formBlur').show();
+        $('#formBlur').hide();
     }
 }
 
@@ -41,7 +41,6 @@ function clockForm() {
         $('#formBlur').show();
     
 }
-
 
 
 
@@ -82,16 +81,24 @@ $(document).ready(function () {
    
     $('#loginn').click(logginForm);
     $('#boking').click(bookingForm);
-    $('#order').click(orderForm);
+//    $('#order').click(orderForm);
     $('.buton').click(function() {
         clockForm();
         // $(this).
     });
 
-    // console.log(getParameterByName('state'));
+
     if ((getParameterByName('state')=='day'||getParameterByName('state')=='time')&&$('.hid').val()==1) {
         $('#formBlur').show();
-    }
- 
 
+    }
+    if ((getParameterByName('state')=='signup') ){
+
+        // $('#toolsBlur').click();
+        $('.formBox1').show();
+       
+        $('#formBlur').show()
+        $("#booking").attr('action', './index.php?state=signupp');
+    }
+   
 });

@@ -1,16 +1,37 @@
 <?php
-include "includes/db.php"
+include "includes/db.php";
+
+if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) && !empty($_POST["phon1"]) && !empty($_POST["btn_time"])) {
 
 
 
 
+	$query =   "INSERT INTO orders (phone,datee, timee) 
+            VALUES ('" . $_POST["phon1"] . "','" . $_POST["dat"] . "','" . $_POST["btn_time"] .  "')";
 
+	$result = mysqli_query($connection, $query);
+	if (!$result)
+		echo 'connectiong failed';
+} elseif (isset($_GET["state"]) and $_GET["state"] == "signupp" && !empty($_POST["namee"]) && !empty($_POST["phone"])) {
+
+
+	$query  = "SELECT * FROM customers WHERE phone='"
+		. $_POST["phone"] . "'";
+
+	$result = mysqli_query($connection, $query);
+	$row = mysqli_fetch_assoc($result);
+	if (!is_array($row)) {
+		$query =   "INSERT INTO customers (name,phone)
+			VALUES ('" . $_POST["namee"] . "','" . $_POST["phone"] .  "')";
+		$result = mysqli_query($connection, $query);
+		if (!$result)
+			echo 'connectiong failed';  // change
+	}
+	else {
+		echo 'the number is exits';        // change 
+	}
+}
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +71,7 @@ include "includes/db.php"
     <![endif]-->
 </head>
 
-<body data-spy="scroll" data-target="#navigation" data-offset="71">
+<body data-spy="scroll" data-target="#navigation" data-offset="71" id="bodyy">
 	<!-- Preloader starts -->
 	<div class="preloader">
 		<div class="browser-screen-loading-content">
@@ -92,7 +113,6 @@ include "includes/db.php"
 						<li><a href="#service">Service</a></li>
 						<li><a href="#gallery">Gallery</a></li>
 						<li><a href="#pricing">Pricing</a></li>
-						<li><a href="#Book">Book</a></li>
 						<li><a href="#" id="loginn">Login</a></li>
 
 					</ul>
@@ -107,14 +127,13 @@ include "includes/db.php"
 	<!-- login form  -->
 	<form id="loggin" class="formBox formBox2" action="./admin.html" method="POST">
 		<h2 class="contact-form-title"> כניסה</h2>
-		<div class="form-group flex">
-			<span>user name:</span>
-			<input type="text" class="form-control inpname" placeholder="Enter Your user name" name="name" required />
+		<label>שם המשתמש</label>
+		<div class="form-group">
+			<input type="text" id="user" name="user" placeholder=" שם המשתמש" required>
 		</div>
+		<label>סיסמה</label>
 		<div class="form-group flex">
-
-			<span>password:</span>
-			<input type="password" class="form-control inpname" placeholder="Enter Your password" name="name" required />
+			<input type="password" class="form-control inpname" placeholder="סיסמה" name="name" required />
 		</div>
 		<div class="form-group">
 			<input type="submit" class="btn-contact" value="המשך" />
@@ -124,7 +143,20 @@ include "includes/db.php"
 
 	<!-- booking form  -->
 	<form id="booking" class="formBox formBox1" action="./index.php?state=day" method="post">
-		<h2 class="contact-form-title">הזמנה חדשה</h2>
+		<?php
+		if (isset($_GET["state"]) and $_GET["state"] == "signup") {
+			echo ' <h2 class="contact-form-title"> הרשמה</h2> ';
+			echo '
+		<label>שם</label>
+		
+		<div class="form-group">
+			<input type="text" id="nam" name="namee" value="" required>
+		</div> ';
+		} else {
+			echo ' <h2 class="contact-form-title"> הזמנה חדשה</h2> ';
+		}
+
+		?>
 
 		<label>מספר טלפון</label>
 
@@ -132,38 +164,44 @@ include "includes/db.php"
 			<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value="" required>
 		</div>
 
+		<!-- <label>טלפון</label> -->
 
 
 		<div class="form-group">
 			<input type="submit" id="order" class="btn-contact" value="המשך" />
 		</div>
-		<div class="form-group">
-			<a href="#">לקוח חדש לחץ כאן</a>
-		</div>
+		<?php
+		if ((isset($_GET["state"]) and $_GET["state"] != "signup") or !isset($_GET["state"]))
+			echo ' <div class="form-group">
+			<a href="./index.php?state=signup">לקוח חדש לחץ כאן</a>
+		</div> ';
+
+		?>
 	</form>
 	<!-- end booking  -->
 
 
 	<!-- day form -->
 	<?php
-	if (isset($_GET["state"]) and $_GET["state"] == "day" &&!empty($_POST["phone"])) {
+	if (isset($_GET["state"]) and $_GET["state"] == "day" && !empty($_POST["phone"])) {
 
-		$query  = "SELECT * FROM orders WHERE phone='"
+		$query  = "SELECT * FROM customers WHERE phone='"
 			. $_POST["phone"] . "'";
 
 		$result = mysqli_query($connection, $query);
 		$row = mysqli_fetch_assoc($result);
 
 		if (is_array($row)) {
-			// echo '<div id="formBlur1" class="screenBlur style=" display: block;"></div>';
-			
+
+
 			$conter = 0;
 			$today = date("Y-m-d");
 			$today1 = date("d");
 			echo '<form id="timing" class=" formBox" action="./index.php?state=time" method="POST" style=" display: block;">
 					<h2 class="contact-form-title"> בחר זמן</h2>
 					<label>' . $row["name"] . ' שלום </label> ';
-					echo '<input type="hidden" class="hid"  value="1">';
+			echo '<input type="hidden" class="hid"  value="1">';
+			echo '<input type="hidden" class="hid" name="phon"  value="' . $_POST["phone"] . '">';
 			while (++$conter != 7) {
 				echo ' 
 				<div class="banner-info-single text">
@@ -192,36 +230,55 @@ include "includes/db.php"
 
 
 
-	if (isset($_GET["state"]) and $_GET["state"] == "time"&&!empty($_POST["btn_day"])) {
+	if (isset($_GET["state"]) and $_GET["state"] == "time" && !empty($_POST["btn_day"]) && !empty($_POST["phon"])) {
 		// $day = date("Y-m-d", strtotime($_POST["btn_day"]));
 		// date("d-", datee);
-		
+
 		$query  = "SELECT * FROM orders WHERE datee='"
 			. $_POST["btn_day"] . "'";
 
 		// echo $day;	
 		$result = mysqli_query($connection, $query);
 
-		if($row = mysqli_fetch_assoc($result))
-		{
+		if ($row = mysqli_fetch_assoc($result)) {
 
 			$dateTime = date('H:i', strtotime($row["timee"]));
-
-		}
-		else
-		$dateTime='10:00';
+		} else
+			$dateTime = '10:00';
 
 
 
 		$end_time = '22:00';
 		$conter = 0;
-		$start_time = "11:00:00";
-		$interval = DateInterval::createFromDateString('15 min');
-		$start = strtotime('11:00');
-		$end = strtotime('22:00');
+		if ($_POST["btn_day"] == date("Y-m-d")) {
+
+			$date = new DateTime("now", new DateTimeZone('Asia/Jerusalem'));
+			$date1 = new DateTime("now", new DateTimeZone('Asia/Jerusalem'));
+			$start_time = $date->format('i');
+
+			while ($start_time % 15 != 0) {
+				$start_time += 1;
+			}
+
+			if ($start_time == 60) {
+				$start_time = 0;
+				$time = $date1->format('H') + 1;
+				$start_time = date('H:i', mktime($time, $start_time));
+			} else {
+				$time = $date1->format('H');
+				$start_time = date('H:i', mktime($time, $start_time));
+			}
+		} else
+			$start_time = "11:00:00";
+		$start = strtotime($start_time);
+		$end = strtotime($end_time);
+		// $interval = DateInterval::createFromDateString('15 min');
 		echo  '	<form id="clock" class=" formBox formBox4" action="./index.php?state=add" method="post" style=" display: block;">
 		<h2 class="contact-form-title"> בחר שעה</h2> ';
-			echo '<input type="hidden" class="hid"  value="1">';
+		echo '<input type="hidden" class="hid"  value="1">';
+		echo '<input type="hidden" class="hid" name="phon1"  value="' . $_POST["phon"] . '">';
+		echo '<input type="hidden" class="hid" name="dat"  value="' . $_POST["btn_day"] . '">';
+
 		for ($i = $start; $i <= $end; $i = $i + 15 * 60) {
 
 			$tmp = date('H:i', $i);
@@ -232,17 +289,14 @@ include "includes/db.php"
 				echo ' 
 					<div class="banner-info-single text">
 					
-					<input type="submit" class="buton" name="btn" value="' .  $tmp . '">
+					<input type="submit" class="buton" name="btn_time" value="' .  $tmp . '">
 					
 					</div>
 					
 					';
-			
-			}
-			else if ($row = mysqli_fetch_assoc($result)){
-				
-				$dateTime = date('H:i', strtotime($row["timee"]));
+			} else if ($row = mysqli_fetch_assoc($result)) {
 
+				$dateTime = date('H:i', strtotime($row["timee"]));
 			}
 		}
 

@@ -120,6 +120,13 @@ font-size: 20px;
     text-align: center;
 
  }
+
+ #timing{
+
+    /* overflow: scroll; */
+    overflow-y: scroll;
+    height: 70%;
+ }
  .time:hover{
 
     color: darkgoldenrod;
