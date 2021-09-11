@@ -3,15 +3,26 @@ include "includes/db.php";
 
 if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) && !empty($_POST["phon1"]) && !empty($_POST["btn_time"])) {
 
+	// $query1  = "SELECT * FROM orders WHERE  datee= ='"
+	// 	. $_POST["dat"] .  "' and 
+	// 	 timee  ='". $_POST["btn_time"] .  "' " ;
 
+	$query1  = "SELECT * FROM orders WHERE timee='"
+		. $_POST["btn_time"] . "' and datee='"
+		. $_POST["dat"] . "'  ";
+	$result1 = mysqli_query($connection, $query1);
+	$row1 = mysqli_fetch_assoc($result1);
+	if (!is_array($row1)) {
 
-
-	$query =   "INSERT INTO orders (phone,datee, timee) 
-            VALUES ('" . $_POST["phon1"] . "','" . $_POST["dat"] . "','" . $_POST["btn_time"] .  "')";
-
-	$result = mysqli_query($connection, $query);
-	if (!$result)
-		echo 'connectiong failed';
+		$query = "INSERT INTO orders (phone,datee, timee) 
+					VALUES ('" . $_POST["phon1"] . "','" . $_POST["dat"] . "','" . $_POST["btn_time"] .  "')";
+		// echo $query;
+		$result = mysqli_query($connection, $query);
+		if (!$result)
+			echo 'connectiong failed';  //CHANGE
+	} else {
+		// echo 'the order is exits';
+	}
 } elseif (isset($_GET["state"]) and $_GET["state"] == "signupp" && !empty($_POST["namee"]) && !empty($_POST["phone"])) {
 
 
@@ -25,12 +36,13 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 			VALUES ('" . $_POST["namee"] . "','" . $_POST["phone"] .  "')";
 		$result = mysqli_query($connection, $query);
 		if (!$result)
-			echo 'connectiong failed';  // change
-	}
-	else {
+			echo 'connectiong failed';  				// change
+	} else {
 		echo 'the number is exits';        // change 
 	}
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -122,18 +134,22 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		</nav>
 	</header>
 	<!-- Header Section Ends-->
+	<?php
 
+	?>
 	<!-- Banner Section Starts -->
 	<!-- login form  -->
-	<form id="loggin" class="formBox formBox2" action="./admin.html" method="POST">
+	<form id="loggin" class="formBox formBox2" action="./index.php?state=zaheday" method="POST">
 		<h2 class="contact-form-title"> כניסה</h2>
+		<div class="vertical-line-1"></div>
+
 		<label>שם המשתמש</label>
 		<div class="form-group">
 			<input type="text" id="user" name="user" placeholder=" שם המשתמש" required>
 		</div>
 		<label>סיסמה</label>
 		<div class="form-group flex">
-			<input type="password" class="form-control inpname" placeholder="סיסמה" name="name" required />
+			<input type="password" class="form-control inpname" placeholder="סיסמה" name="pass" required />
 		</div>
 		<div class="form-group">
 			<input type="submit" class="btn-contact" value="המשך" />
@@ -146,6 +162,8 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		<?php
 		if (isset($_GET["state"]) and $_GET["state"] == "signup") {
 			echo ' <h2 class="contact-form-title"> הרשמה</h2> ';
+			echo '<div class="vertical-line-1"></div>';
+
 			echo '
 		<label>שם</label>
 		
@@ -154,6 +172,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		</div> ';
 		} else {
 			echo ' <h2 class="contact-form-title"> הזמנה חדשה</h2> ';
+			echo '<div class="vertical-line-1"></div>';
 		}
 
 		?>
@@ -171,11 +190,15 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 			<input type="submit" id="order" class="btn-contact" value="המשך" />
 		</div>
 		<?php
-		if ((isset($_GET["state"]) and $_GET["state"] != "signup") or !isset($_GET["state"]))
+		if ((isset($_GET["state"]) and $_GET["state"] != "signup") or !isset($_GET["state"])) {
 			echo ' <div class="form-group">
 			<a href="./index.php?state=signup">לקוח חדש לחץ כאן</a>
 		</div> ';
-
+		} else {
+			echo ' <div class="form-group">
+			<a href="./index.php">כניסה</a>
+		</div> ';
+		}
 		?>
 	</form>
 	<!-- end booking  -->
@@ -183,6 +206,10 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 
 	<!-- day form -->
 	<?php
+	function getWeekday($date)
+	{
+		return date('w', strtotime($date));
+	}
 	if (isset($_GET["state"]) and $_GET["state"] == "day" && !empty($_POST["phone"])) {
 
 		$query  = "SELECT * FROM customers WHERE phone='"
@@ -192,25 +219,90 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		$row = mysqli_fetch_assoc($result);
 
 		if (is_array($row)) {
-
-
 			$conter = 0;
 			$today = date("Y-m-d");
-			$today1 = date("d");
+
 			echo '<form id="timing" class=" formBox" action="./index.php?state=time" method="POST" style=" display: block;">
+			
 					<h2 class="contact-form-title"> בחר זמן</h2>
-					<label>' . $row["name"] . ' שלום </label> ';
-			echo '<input type="hidden" class="hid"  value="1">';
+					<label>שלום ' . $row["name"] . '  </label> ';
+			echo '<div class="vertical-line-1"></div>';
+
+			echo '<input type="hidden" class="hid hid1"  value="1">';
 			echo '<input type="hidden" class="hid" name="phon"  value="' . $_POST["phone"] . '">';
-			while (++$conter != 7) {
-				echo ' 
-				<div class="banner-info-single text">
-				
-				<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
-				
-				</div>
-				
-				';
+			while (++$conter != 8) {
+				$today1 = getWeekday($today);
+				switch ($today1) {
+					case 0:
+						echo ' 
+						<div class="banner-info-single text days_click">
+						
+						<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+						
+						';
+						break;
+					case 1:
+						echo ' 
+						<div class="banner-info-single text days_click">
+						
+						<label class="days days_click"> יום שני<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+						
+						';
+						break;
+					case 2:
+						$today++;
+						break;
+
+					case 3:
+						echo ' 
+						<div class="banner-info-single text days_click">
+						
+						<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+						
+						';
+
+						break;
+					case 4:
+						echo ' 
+						<div class="banner-info-single text days_click">
+						
+						<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+						
+						';
+
+						break;
+					case 5:
+						echo ' 
+						<div class="banner-info-single text days_click">
+						
+						<label class="days days_click"> יום שישי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+						
+						';
+
+						break;
+					case 6:
+						echo ' 
+							<div class="banner-info-single text days_click">
+							
+							<label class="days days_click"> יום שבת<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						   </label>
+						</div>
+							
+							</div>
+							
+							';
+						break;
+				}
 			}
 			echo '</form>';
 		}
@@ -218,22 +310,15 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		// $dayofweek = date('w', strtotime($today));
 
 	}
-
-
-
 	?>
 	<!-- day form -->
-
-
 	<!-- pick a clock -->
 	<?php
-
-
 
 	if (isset($_GET["state"]) and $_GET["state"] == "time" && !empty($_POST["btn_day"]) && !empty($_POST["phon"])) {
 		// $day = date("Y-m-d", strtotime($_POST["btn_day"]));
 		// date("d-", datee);
-
+		// echo  $_POST["btn_day"];
 		$query  = "SELECT * FROM orders WHERE datee='"
 			. $_POST["btn_day"] . "'";
 
@@ -268,21 +353,42 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				$time = $date1->format('H');
 				$start_time = date('H:i', mktime($time, $start_time));
 			}
-		} else
+			if ($start_time < "11:00") {
+				$start_time = "11:00";
+			}
+		} else {
 			$start_time = "11:00:00";
+		}
+		// echo $start_time;
 		$start = strtotime($start_time);
 		$end = strtotime($end_time);
 		// $interval = DateInterval::createFromDateString('15 min');
-		echo  '	<form id="clock" class=" formBox formBox4" action="./index.php?state=add" method="post" style=" display: block;">
-		<h2 class="contact-form-title"> בחר שעה</h2> ';
+		echo '<form id="back_arrow"  action="./index.php?state=day" method="post" ">';
+		echo '  <input type="hidden" name="phone" value="' . $_POST["phon"] . '"> ';
+		echo '</form>';
+		echo  '	<form id="clock" class=" formBox formBox4" action="./index.php?state=add" method="post" style=" display: block;"> ';
+		echo ' <div class="header_time" >
+		<a  href="#" id="back-arrow" ></a>
+		<h2 class="contact-form-title time_title"> בחר שעה</h2> 
+		<div class="vertical-line-1"></div>
+		</div> ';
 		echo '<input type="hidden" class="hid"  value="1">';
 		echo '<input type="hidden" class="hid" name="phon1"  value="' . $_POST["phon"] . '">';
 		echo '<input type="hidden" class="hid" name="dat"  value="' . $_POST["btn_day"] . '">';
-
 		for ($i = $start; $i <= $end; $i = $i + 15 * 60) {
 
 			$tmp = date('H:i', $i);
+			if ($i == $start && $tmp > $dateTime) {
 
+
+				while ($row = mysqli_fetch_assoc($result)) {
+					$dateTime = date('H:i', strtotime($row["timee"]));
+					if ($dateTime >= $tmp) {
+						break;
+					}
+				}
+			}
+			// echo $tmp;
 
 			if ($tmp != $dateTime) {
 
@@ -290,24 +396,18 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 					<div class="banner-info-single text">
 					
 					<input type="submit" class="buton" name="btn_time" value="' .  $tmp . '">
-					
 					</div>
-					
 					';
 			} else if ($row = mysqli_fetch_assoc($result)) {
 
 				$dateTime = date('H:i', strtotime($row["timee"]));
+				// echo $dateTime;
 			}
 		}
-
-
 		echo	'</form>';
 	}
 
-
 	?>
-
-
 	<!-- end pick  -->
 	<section class="banner" id="home">
 		<div class="container">
@@ -746,42 +846,141 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	</section> -->
 	<!-- Testimonial section ends -->
 
-	<!-- Contactus section starts -->
-	<!-- <section class="contactus" id="Book">
-		<div class="container-fluid">
-			<div class="row no-pad">
-				<div class="col-md-4">
-					<div class="contact-form">
-						<h2 class="contact-form-title">Book Now</h2>
-						<form action="./calender.php?status=add" method="POST">
-							<div class="form-group">
-								<input type="text" class="form-control inpname" placeholder="Enter Your Name" name="name" required />
-							</div>
+	<!-- Contactus section starts adminnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn form -->
+	<!-- <?php
+	// if ((isset($_GET["state"]) and $_GET["state"] == "zaheday" and !empty($_POST["user"]) and !empty($_POST["pass"]))) {
+	// 	$query1  = "SELECT * FROM orders WHERE username='"
+	// 		. $_POST["user"] . "' and password='"
+	// 		. $_POST["pass"] . "'  ";
+	// 	if (!is_array($row1)) {
+	// 		function getWeekday($date)
+	// 		{
+	// 			return date('w', strtotime($date));
+	// 		}
+	// 		$conter = 0;
+	// 		$today = date("Y-m-d");
 
-							<div class="form-group">
-								<input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
-							</div>
+	// 		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
 
-							<div class="form-group">
-								<input type="number" id="quantity" name="quantity" placeholder="Amount of people" required>
-							</div>
+	// 	<h2 class="contact-form-title"> בחר יום</h2>
+	// 	<label>שלום זאהי דקה </label> ';
+	// 		echo '<div class="vertical-line-1"></div>';
 
-							<div class="form-group">
-								<input type="submit" class="btn-contact" value="Submit" />
-							</div>
-						</form>
+	// 		while (++$conter != 8) {
+	// 			$today1 = getWeekday($today);
+	// 			switch ($today1) {
+	// 				case 0:
+	// 					echo ' 
+	// 		<div class="banner-info-single text days_click">
+			
+	// 		<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+			
+	// 		';
+	// 					break;
+	// 				case 1:
+	// 					echo ' 
+	// 		<div class="banner-info-single text days_click">
+			
+	// 		<label class="days days_click"> יום שני<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+			
+	// 		';
+	// 					break;
+	// 				case 2:
+	// 					$today++;
+	// 					break;
 
-					</div>
-				</div> -->
+	// 				case 3:
+	// 					echo ' 
+	// 		<div class="banner-info-single text days_click">
+			
+	// 		<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+			
+	// 		';
 
-	<!-- <div class="col-md-8">
-					<div class="google-map">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d14767.723033070624!2d70.75848835!3d22.280612599999998!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1504611295336" height="600" style="border:0;width:100%;" allowfullscreen></iframe>
-					</div>
-				</div> -->
-	</div>
-	</div>
-	</section>
+	// 					break;
+	// 				case 4:
+	// 					echo ' 
+	// 		<div class="banner-info-single text days_click">
+			
+	// 		<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+			
+	// 		';
+
+	// 					break;
+	// 				case 5:
+	// 					echo ' 
+	// 		<div class="banner-info-single text days_click">
+			
+	// 		<label class="days days_click"> יום שישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+			
+	// 		';
+
+	// 					break;
+	// 				case 6:
+	// 					echo ' 
+	// 			<div class="banner-info-single text days_click">
+				
+	// 			<label class="days days_click"> יום שבת<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+	// 		   </label>
+	// 		</div>
+				
+	// 			</div>
+				
+	// 			';
+	// 					break;
+	// 			}
+	// 		}
+	// 		echo '</form>';
+	// 	}
+	// 	if (isset($_GET["state"]) and $_GET["state"] == "zahetime" && !empty($_POST["zahe_day"])) {
+	// 		// echo '<form id="back_arroww"  action="./index.php?state=zaheday" method="post" ">';
+	// 		// echo '  <input type="hidden" name="phone" value="' . $_POST["phon"] . '"> ';
+	// 		// echo '</form>';
+
+	// 		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
+
+	// 	<h2 class="contact-form-title">  הזמנות של יום:' . $_POST["zahe_day"] . '</h2>
+	// 	<a  href="./admin.php?state=zaheday" id="back-arroww" ></a>
+	// 	<label>שלום זאהי דקה </label> ';
+	// 		echo '<div class="vertical-line-1"></div>';
+
+	// 		echo '<div class="vertical-line-1"></div>';
+	// 		$query  = "SELECT * FROM orders  where datee='"
+	// 			. $_POST["zahe_day"] . "'  ";
+	// 		$result = mysqli_query($connection, $query);
+	// 		while ($row = mysqli_fetch_assoc($result)) {
+	// 			$query1  = "SELECT * FROM customers  where phone='"
+	// 				. $row["phone"] . "'  ";
+	// 			$result1 = mysqli_query($connection, $query1);
+	// 			$row1 = mysqli_fetch_assoc($result1);
+	// 			$dateTime = date('H:i', strtotime($row["timee"]));
+
+	// 			echo ' 
+	// 			<div class="banner-info-single text days_click">
+				
+	// 			<label>  שם: ' . $row1["name"] . ' </label>
+	// 			<label> ' . $row1["phone"] . ':מספר טלפון</label>
+	// 			<label> ' . $dateTime . ' :זמן</label>
+	// 		</div>
+				
+				
+				
+	// 			';
+	// 		}
+	// 	}
+	// }
+	?> -->
+
 	<!-- Contactus section ends -->
 
 	<footer>

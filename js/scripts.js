@@ -32,18 +32,28 @@ function orderForm() {
 }
 
 function clockForm() {
-    
-        //  $('#timing').css('display', "block");
-        $('#toolsBlur').click();
-        $('.formBox4').show();
-        // $('#booking').attr('action', './admin.html?status=login');
-        // $('#addMember').attr('action', './memberList.php?status=add');
-        $('#formBlur').show();
-    
+
+    //  $('#timing').css('display', "block");
+    $('#toolsBlur').click();
+    $('.formBox4').show();
+    // $('#booking').attr('action', './admin.html?status=login');
+    // $('#addMember').attr('action', './memberList.php?status=add');
+    $('#formBlur').show();
+
 }
 
 
+function callAjax() {
+    // alert( $("input:tel").val());
+    // console.log( $("#phone").val());
+    $.ajax({
+        type: "POST",
+        url: "index.php",
+        data: { phone: $("input:tel").val() },
+        cache: true,
 
+    });
+}
 
 
 
@@ -78,27 +88,50 @@ $(document).ready(function () {
             $('#formBlur').click();
         });
     });
-   
+
     $('#loginn').click(logginForm);
     $('#boking').click(bookingForm);
-//    $('#order').click(orderForm);
-    $('.buton').click(function() {
+    $('#back-arrow').click(function () {
+
+
+        $("#back_arrow").submit();
+    });
+    $('.buton').click(function () {
         clockForm();
         // $(this).
     });
+    // $('.days_click').click(function () {
+
+    //     // $("input[type=submit]").attr("clicked", "true");
+
+    //     $('.buton').click(function () {
 
 
-    if ((getParameterByName('state')=='day'||getParameterByName('state')=='time')&&$('.hid').val()==1) {
+    //         $(this).click(function () {
+    //             $("#timing").click();
+    //         });
+    //     });
+
+    // });
+    $(".day_week").click(function () {
+        // console.log($(".day_week").val());
+        $(this).click(function () {
+            $("#timing").submit();
+        });
+
+    });
+    if ((getParameterByName('state') == 'day' || getParameterByName('state') == 'time') && $('.hid1').val() == 1) {
         $('#formBlur').show();
 
+
     }
-    if ((getParameterByName('state')=='signup') ){
+    if ((getParameterByName('state') == 'signup')) {
 
         // $('#toolsBlur').click();
         $('.formBox1').show();
-       
+
         $('#formBlur').show()
         $("#booking").attr('action', './index.php?state=signupp');
     }
-   
+
 });
