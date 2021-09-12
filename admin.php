@@ -87,7 +87,7 @@
 	$conter = 0;
 	$today = date("Y-m-d");
 
-	echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
+	echo '<form id="zahe_day" class="formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
 
 		<h2 class="contact-form-title"> בחר יום</h2>
 		<label>שלום זאהי דקה </label> ';

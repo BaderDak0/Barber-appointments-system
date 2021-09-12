@@ -759,25 +759,19 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	<!-- Testimonial section starts -->
 	<!-- <section class="testimonial" id="testimonial">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="main-title">
-						<h2>Customer Testimonial</h2>
-					</div>
-				</div>
-			</div>
+			 -->
 
-			<div class="row">
-				<div class="col-md-12"> -->
+	<!-- <div class="row">
+				<div class="col-md-12">  -->
 	<!-- Header slider starts -->
 	<!-- <div class="owl-carousel owl-theme testimonial-slider" id="testimonial-slider">
 						<div class="item">
 							<div class="testimonial-single">
 								<div class="icon-box">
 									<i class="fa fa-quote-left"></i>
-								</div>
+								</div>  -->
 
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
+	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
 								<h3>- Eric Gartner</h3>
 							</div>
 						</div>
@@ -786,8 +780,41 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 							<div class="testimonial-single">
 								<div class="icon-box">
 									<i class="fa fa-quote-left"></i>
-								</div>
+								</div> -->
 
+	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
+								<h3>- Jonty Roads</h3>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="testimonial-single">
+								<div class="icon-box">
+									<i class="fa fa-quote-left"></i>
+								</div> -->
+
+	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
+								<h3>- Esha Gupta</h3>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="testimonial-single">
+								<div class="icon-box">
+									<i class="fa fa-quote-left"></i>
+								</div> -->
+
+	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
+								<h3>- Eric Gartner</h3>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="testimonial-single">
+								<div class="icon-box">
+									<i class="fa fa-quote-left"></i>
+								</div> -->
+	<!-- 
 								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
 								<h3>- Jonty Roads</h3>
 							</div>
@@ -802,184 +829,166 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
 								<h3>- Esha Gupta</h3>
 							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div>
-
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Eric Gartner</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div>
-
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Jonty Roads</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div>
-
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Esha Gupta</h3>
-							</div>
-						</div>
+						</div> -->
 
 
-					</div> -->
+	<!-- </div> -->
 	<!-- Header slider ends -->
+	<!-- </div>  -->
+	<!-- </div> -->
 	<!-- </div>
-			</div>
-		</div>
-	</section> -->
+	</section>  -->
 	<!-- Testimonial section ends -->
 
 	<!-- Contactus section starts adminnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn form -->
-	<!-- <?php
-	// if ((isset($_GET["state"]) and $_GET["state"] == "zaheday" and !empty($_POST["user"]) and !empty($_POST["pass"]))) {
-	// 	$query1  = "SELECT * FROM orders WHERE username='"
-	// 		. $_POST["user"] . "' and password='"
-	// 		. $_POST["pass"] . "'  ";
-	// 	if (!is_array($row1)) {
-	// 		function getWeekday($date)
-	// 		{
-	// 			return date('w', strtotime($date));
-	// 		}
-	// 		$conter = 0;
-	// 		$today = date("Y-m-d");
+	<?php
 
-	// 		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
-
-	// 	<h2 class="contact-form-title"> בחר יום</h2>
-	// 	<label>שלום זאהי דקה </label> ';
-	// 		echo '<div class="vertical-line-1"></div>';
-
-	// 		while (++$conter != 8) {
-	// 			$today1 = getWeekday($today);
-	// 			switch ($today1) {
-	// 				case 0:
-	// 					echo ' 
-	// 		<div class="banner-info-single text days_click">
+	if (isset($_GET["state"]) and $_GET["state"] == "zaheday" and !empty($_POST["user"])) {
+		$query1  = "SELECT * FROM users WHERE username='"
+		. $_POST["user"] . "' and password='"
+		. $_POST["pass"] . "'  ";
+		$result = mysqli_query($connection, $query1);
+		$row1 = mysqli_fetch_assoc($result);
+		if (is_array($row1)) {
 			
-	// 		<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
+			$conter = 0;
+			$today = date("Y-m-d");
+			echo'<section class="testimonial" id="testimonial">
+			<div class="container">';
 			
-	// 		';
-	// 					break;
-	// 				case 1:
-	// 					echo ' 
-	// 		<div class="banner-info-single text days_click">
 			
-	// 		<label class="days days_click"> יום שני<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
-			
-	// 		';
-	// 					break;
-	// 				case 2:
-	// 					$today++;
-	// 					break;
-
-	// 				case 3:
-	// 					echo ' 
-	// 		<div class="banner-info-single text days_click">
-			
-	// 		<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
-			
-	// 		';
-
-	// 					break;
-	// 				case 4:
-	// 					echo ' 
-	// 		<div class="banner-info-single text days_click">
-			
-	// 		<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
-			
-	// 		';
-
-	// 					break;
-	// 				case 5:
-	// 					echo ' 
-	// 		<div class="banner-info-single text days_click">
-			
-	// 		<label class="days days_click"> יום שישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
-			
-	// 		';
-
-	// 					break;
-	// 				case 6:
-	// 					echo ' 
-	// 			<div class="banner-info-single text days_click">
+			echo '<form id="zahe_day"  action="./index.php?state=zahetime" method="POST" style=" display: block;">
+			<div class="row no-pad">
+				<div class="col-md-12">
+					<div class="main-title">
+					<h2>  שלום זאהי דקה</h2>
+					<h2> בחר יום</h2>
 				
-	// 			<label class="days days_click"> יום שבת<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-	// 		   </label>
-	// 		</div>
-				
-	// 			</div>
-				
-	// 			';
-	// 					break;
-	// 			}
-	// 		}
-	// 		echo '</form>';
-	// 	}
-	// 	if (isset($_GET["state"]) and $_GET["state"] == "zahetime" && !empty($_POST["zahe_day"])) {
-	// 		// echo '<form id="back_arroww"  action="./index.php?state=zaheday" method="post" ">';
-	// 		// echo '  <input type="hidden" name="phone" value="' . $_POST["phon"] . '"> ';
-	// 		// echo '</form>';
+					</div>
+				</div>
+			</div>';
+			
+			echo '<div class="vertical-line-1"></div>';
+		
 
-	// 		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
+			while (++$conter != 8) {
+				$today1 = getWeekday($today);
+				switch ($today1) {
+					case 0:
+						echo ' 
+						
+						
+			<div class="banner-info-single text days_click">
+			<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+			
+			';
+						break;
+					case 1:
+						echo ' 
+			<div class="banner-info-single text days_click">
+			
+			<label class="days days_click"> יום שני<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+			
+			';
+						break;
+					case 2:
+						$today++;
+						break;
 
-	// 	<h2 class="contact-form-title">  הזמנות של יום:' . $_POST["zahe_day"] . '</h2>
-	// 	<a  href="./admin.php?state=zaheday" id="back-arroww" ></a>
-	// 	<label>שלום זאהי דקה </label> ';
-	// 		echo '<div class="vertical-line-1"></div>';
+					case 3:
+						echo ' 
+			<div class="banner-info-single text days_click">
+			
+			<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+			
+			';
 
-	// 		echo '<div class="vertical-line-1"></div>';
-	// 		$query  = "SELECT * FROM orders  where datee='"
-	// 			. $_POST["zahe_day"] . "'  ";
-	// 		$result = mysqli_query($connection, $query);
-	// 		while ($row = mysqli_fetch_assoc($result)) {
-	// 			$query1  = "SELECT * FROM customers  where phone='"
-	// 				. $row["phone"] . "'  ";
-	// 			$result1 = mysqli_query($connection, $query1);
-	// 			$row1 = mysqli_fetch_assoc($result1);
-	// 			$dateTime = date('H:i', strtotime($row["timee"]));
+						break;
+					case 4:
+						echo ' 
+			<div class="banner-info-single text days_click">
+			
+			<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+			
+			';
 
-	// 			echo ' 
-	// 			<div class="banner-info-single text days_click">
+						break;
+					case 5:
+						echo ' 
+			<div class="banner-info-single text days_click">
+			
+			<label class="days days_click"> יום שישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+			
+			';
+
+						break;
+					case 6:
+						echo ' 
+				<div class="banner-info-single text days_click">
 				
-	// 			<label>  שם: ' . $row1["name"] . ' </label>
-	// 			<label> ' . $row1["phone"] . ':מספר טלפון</label>
-	// 			<label> ' . $dateTime . ' :זמן</label>
-	// 		</div>
+				<label class="days days_click"> יום שבת<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
+			   </label>
+			</div>
+				
+				</div>
+				
+				';
+						break;
+				}
+			}
+			echo '</form>';
+			echo '		</div>
+			</section>';
+		}
+	}
+	if (isset($_GET["state"]) && $_GET["state"] == "zahetime" && !empty($_POST["zahe_day"])) {
+		// echo '<form id="back_arroww"  action="./index.php?state=zaheday" method="post" ">';
+		// echo '  <input type="hidden" name="phone" value="' . $_POST["phon"] . '"> ';
+		// echo '</form>';
+
+		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
+
+		<h2 class="contact-form-title">  הזמנות של יום:' . $_POST["zahe_day"] . '</h2>
+		<a  href="./admin.php?state=zaheday" id="back-arroww" ></a>
+		<label>שלום זאהי דקה </label> ';
+		echo '<div class="vertical-line-1"></div>';
+
+		echo '<div class="vertical-line-1"></div>';
+		$query  = "SELECT * FROM orders  where datee='"
+			. $_POST["zahe_day"] . "'  ";
+		$result = mysqli_query($connection, $query);
+		while ($row = mysqli_fetch_assoc($result)) {
+			$query1  = "SELECT * FROM customers  where phone='"
+				. $row["phone"] . "'  ";
+			$result1 = mysqli_query($connection, $query1);
+			$row1 = mysqli_fetch_assoc($result1);
+			$dateTime = date('H:i', strtotime($row["timee"]));
+
+			echo ' 
+				<div class="banner-info-single text days_click">
+				
+				<label>  שם: ' . $row1["name"] . ' </label>
+				<label> ' . $row1["phone"] . ':מספר טלפון</label>
+				<label> ' . $dateTime . ' :זמן</label>
+			</div>
 				
 				
 				
-	// 			';
-	// 		}
-	// 	}
-	// }
-	?> -->
+				';
+		}
+	}
+
+	?>
 
 	<!-- Contactus section ends -->
 
