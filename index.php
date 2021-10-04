@@ -1,30 +1,51 @@
 <?php
 include "includes/db.php";
 
+
 if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) && !empty($_POST["phon1"]) && !empty($_POST["btn_time"])) {
 
-	// $query1  = "SELECT * FROM orders WHERE  datee= ='"
-	// 	. $_POST["dat"] .  "' and 
-	// 	 timee  ='". $_POST["btn_time"] .  "' " ;
+	$query2 = "SELECT * FROM orders WHERE phone='"
+		. $_POST["phon1"] . "' and datee>='"
+		. date("Y-m-d") . "'  ";
+	$result2 = mysqli_query($connection, $query2);
+	$row2 = mysqli_fetch_assoc($result2);
+	if (!is_array($row2)) {
 
-	$query1  = "SELECT * FROM orders WHERE timee='"
-		. $_POST["btn_time"] . "' and datee='"
-		. $_POST["dat"] . "'  ";
-	$result1 = mysqli_query($connection, $query1);
-	$row1 = mysqli_fetch_assoc($result1);
-	if (!is_array($row1)) {
+		$query1  = "SELECT * FROM orders WHERE timee='"
+			. $_POST["btn_time"] . "' and datee='"
+			. $_POST["dat"] . "'  ";
+		$result1 = mysqli_query($connection, $query1);
+		$row1 = mysqli_fetch_assoc($result1);
+		
+		if (!is_array($row1)) {
 
-		$query = "INSERT INTO orders (phone,datee, timee) 
+			$query = "INSERT INTO orders (phone,datee, timee) 
 					VALUES ('" . $_POST["phon1"] . "','" . $_POST["dat"] . "','" . $_POST["btn_time"] .  "')";
-		// echo $query;
-		$result = mysqli_query($connection, $query);
-		if (!$result)
-			echo 'connectiong failed';  //CHANGE
-	} else {
-		// echo 'the order is exits';
+			// echo $query;
+			$result = mysqli_query($connection, $query);
+		
+				echo '<form id="alert_order" class="formBox " action="./index.php" style="display:block;">
+				<input type="hidden" class="hid hid4"  value="1">
+				<label>הזמנה בוצעה בהצלחה </label>
+				<div class="form-group">
+				<input type="submit" class="btn-contact" value="סיים" />
+				</div>	
+				</form>'; 
+			
+		} else {
+			echo 'order error';
+		}
+	}
+	else {
+		echo '<form id="alert_order" class="formBox " action="./index.php" style="display:block;">
+		<input type="hidden" class="hid hid4"  value="1">
+		<label>כבר יש לך הזמנה פעילה</label>
+		<div class="form-group">
+		<input type="submit" class="btn-contact" value="סיים" />
+	    </div>	
+		</form>';  
 	}
 } elseif (isset($_GET["state"]) and $_GET["state"] == "signupp" && !empty($_POST["namee"]) && !empty($_POST["phone"])) {
-
 
 	$query  = "SELECT * FROM customers WHERE phone='"
 		. $_POST["phone"] . "'";
@@ -38,13 +59,72 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		if (!$result)
 			echo 'connectiong failed';  				// change
 	} else {
-		echo 'the number is exits';        // change 
+		echo '<form id="alert_customer" class="formBox formBox8" action="./index.php" style="display:block;">
+			<input type="hidden" class="hid hid3"  value="1">
+		<label>מספר הפלפון כבר קיים במערכת</label>
+		<div class="form-group">
+		<input type="submit" class="btn-contact" value="סיים" />
+	    </div>	
+		</form>';     			  // change 
 	}
+} else if (isset($_GET["state"]) and $_GET["state"] == "delete" && !empty($_POST["delet1"]) && !empty($_POST["delet2"]) && !empty($_POST["delet3"])) {
+
+
+
+	// $dateTimee = date('H:i', strtotime($_POST["delet3"]));
+
+	$query = "delete from orders where phone='" . $_POST["delet1"] . "' and timee='" . $_POST["delet3"] . "' and datee='" . $_POST["delet2"] . "'";
+	$result = mysqli_query($connection, $query);
+	if (!$result)
+		echo 'connectiong failed';
+
+		echo '<form id="alert_order" class="formBox " action="./index.php" style="display:block;">
+				<input type="hidden" class="hid hid4"  value="1">
+				<label>  התור בוטל </label>
+				<div class="form-group">
+				<input type="submit" class="btn-contact" value="סיים" />
+				</div>	
+				</form>'; 
+			
+}
+
+// ----------------  login ----------------------------------------- && isset($_POST["user"]) && isset($post["pass"])
+
+else if (isset($_GET["state"]) && $_GET["state"] == "login") {
+	
+	$query = "SELECT * FROM users WHERE username='"
+		. $_POST["user"]
+		. "' AND password ='" . $_POST["pass"] . "'";
+
+	$result = mysqli_query($connection, $query);
+	$row = mysqli_fetch_assoc($result);
+
+	if (is_array($row)) {
+		if (session_status() != PHP_SESSION_ACTIVE)
+			session_start();
+
+		$_SESSION["user"] = $row["username"];
+		$_SESSION["pass"] = $row["password"];
+		// header('location:https://www.zahebarber.com/admin.php?state=zaheday');
+		//  echo "<script>window.location.href = 'https://www.zahebarber.com/admin.php?state=zaheday';</script>"
+		echo '<script type="text/javascript">
+		location.replace("https://www.zahebarber.com/admin.php?state=zaheday"); </script>';
+	}
+	 else{
+
+	echo '<form id="alert_order" class="formBox " action="./index.php" style="display:block;">
+	<input type="hidden" class="hid hid4"  value="1">
+	<label>שם משתמש או סיסמה לא נכונים</label>
+	<div class="form-group">
+	<input type="submit" class="btn-contact" value="סיים" />
+	</div>	
+	</form>'; 
+	 }
+
 }
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +137,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	<meta name="keywords" content="">
 	<meta name="author" content="Awaiken Theme">
 	<!-- Page Title -->
-	<title>Barbershop and Hair Salon HTML Template</title>
+	<title>Zahe Daka Barber-מספרה זאהי דקה</title>
 	<!-- Google Fonts css-->
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700%7CMontserrat:400,500,600,700,800,900" rel="stylesheet">
 	<!-- Bootstrap css -->
@@ -125,7 +205,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						<li><a href="#service">Service</a></li>
 						<li><a href="#gallery">Gallery</a></li>
 						<li><a href="#pricing">Pricing</a></li>
-						<li><a href="#" id="loginn">Login</a></li>
+						<li><a href="#" class="loginn">Login</a></li>
 
 					</ul>
 				</div>
@@ -138,10 +218,12 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 
 	?>
 	<!-- Banner Section Starts -->
+
 	<!-- login form  -->
-	<form id="loggin" class="formBox formBox2" action="./index.php?state=zaheday" method="POST">
+	<form id="loggin" class="formBox formBox2" action="./index.php?state=login" method="POST">
 		<h2 class="contact-form-title"> כניסה</h2>
 		<div class="vertical-line-1"></div>
+
 
 		<label>שם המשתמש</label>
 		<div class="form-group">
@@ -149,7 +231,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		</div>
 		<label>סיסמה</label>
 		<div class="form-group flex">
-			<input type="password" class="form-control inpname" placeholder="סיסמה" name="pass" required />
+			<input type="password" id="pass" class="form-control inpname" placeholder="סיסמה" name="pass" required />
 		</div>
 		<div class="form-group">
 			<input type="submit" class="btn-contact" value="המשך" />
@@ -158,8 +240,11 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	<!-- end login form  -->
 
 	<!-- booking form  -->
-	<form id="booking" class="formBox formBox1" action="./index.php?state=day" method="post">
+	<form id="booking" class="formBox formBox1" action="./index.php?state=day" method="post" <?php if (isset($_GET["state"]) and $_GET["state"] == "loginnorder") {
+		echo 'style=" display: block;"';
+	} ?>>
 		<?php
+		echo'<input type="hidden" class="hid hid4"  value="1">';
 		if (isset($_GET["state"]) and $_GET["state"] == "signup") {
 			echo ' <h2 class="contact-form-title"> הרשמה</h2> ';
 			echo '<div class="vertical-line-1"></div>';
@@ -170,7 +255,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		<div class="form-group">
 			<input type="text" id="nam" name="namee" value="" required>
 		</div> ';
-		} else {
+		} else  {
 			echo ' <h2 class="contact-form-title"> הזמנה חדשה</h2> ';
 			echo '<div class="vertical-line-1"></div>';
 		}
@@ -196,7 +281,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		</div> ';
 		} else {
 			echo ' <div class="form-group">
-			<a href="./index.php">כניסה</a>
+			<a href="./index.php?state=loginnorder" >כניסה</a>
 		</div> ';
 		}
 		?>
@@ -221,23 +306,28 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		if (is_array($row)) {
 			$conter = 0;
 			$today = date("Y-m-d");
-
+			 date('Y-m-d', strtotime($today. ' + 8 days'));
 			echo '<form id="timing" class=" formBox" action="./index.php?state=time" method="POST" style=" display: block;">
 			
 					<h2 class="contact-form-title"> בחר זמן</h2>
 					<label>שלום ' . $row["name"] . '  </label> ';
 			echo '<div class="vertical-line-1"></div>';
 
-			echo '<input type="hidden" class="hid hid1"  value="1">';
+			echo '<input type="hidden" name="back_white" class="hid hid1"  value="1">';
 			echo '<input type="hidden" class="hid" name="phon"  value="' . $_POST["phone"] . '">';
 			while (++$conter != 8) {
+			
+				
+				
+					
 				$today1 = getWeekday($today);
+			
 				switch ($today1) {
 					case 0:
 						echo ' 
 						<div class="banner-info-single text days_click">
 						
-						<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 						
@@ -247,21 +337,21 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						echo ' 
 						<div class="banner-info-single text days_click">
 						
-						<label class="days days_click"> יום שני<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						<label class="days days_click"> יום שני<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 						
 						';
 						break;
 					case 2:
-						$today++;
+						$today;
 						break;
 
 					case 3:
 						echo ' 
 						<div class="banner-info-single text days_click">
 						
-						<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 						
@@ -272,7 +362,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						echo ' 
 						<div class="banner-info-single text days_click">
 						
-						<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 						
@@ -283,7 +373,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						echo ' 
 						<div class="banner-info-single text days_click">
 						
-						<label class="days days_click"> יום שישי<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+						<label class="days days_click"> יום שישי<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 						
@@ -294,7 +384,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						echo ' 
 							<div class="banner-info-single text days_click">
 							
-							<label class="days days_click"> יום שבת<input type="submit" class="buton" name="btn_day" value="' . ($today++) . '">
+							<label class="days days_click"> יום שבת<input type="submit" class="buton" name="btn_day" value="' . ($today) . '">
 						   </label>
 						</div>
 							
@@ -303,10 +393,21 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 							';
 						break;
 				}
+				$today=	date('Y-m-d', strtotime($today. ' + 1 days'));
 			}
 			echo '</form>';
 		}
+		else {
 
+	echo '<form id="alert_order" class="formBox " action="./index.php" style="display:block;">
+	<input type="hidden" class="hid hid4"  value="1">
+	<label> המספר לא רשום במערכת </label>
+	<div class="form-group">
+	<input type="submit" class="btn-contact" value="סיים" />
+	</div>	
+	</form>'; 
+
+		}
 		// $dayofweek = date('w', strtotime($today));
 
 	}
@@ -320,7 +421,8 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		// date("d-", datee);
 		// echo  $_POST["btn_day"];
 		$query  = "SELECT * FROM orders WHERE datee='"
-			. $_POST["btn_day"] . "'";
+			. $_POST["btn_day"] . "'
+			order by datee asc";
 
 		// echo $day;	
 		$result = mysqli_query($connection, $query);
@@ -406,6 +508,82 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 		}
 		echo	'</form>';
 	}
+	?>
+	<form id="cance" class="formBox formBox5" action="./index.php?state=cancelorder" method="POST">
+		<h2 class="contact-form-title"> ביטול תור</h2>
+		<div class="vertical-line-1"></div>
+
+		<label>מספר טלפון</label>
+
+		<div class="form-group">
+			<input type="tel" id="phon" name="phone1" placeholder="123-456-7890" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value="" required>
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn-contact" value="המשך" />
+		</div>
+	</form>
+	<?php
+	if (isset($_GET["state"]) and $_GET["state"] == "cancelorder" && !empty($_POST["phone1"])) {
+
+		$query  = "SELECT * FROM orders WHERE phone='"
+			. $_POST["phone1"] . "' and datee >='"
+			. date("Y-m-d") . "'";
+		$result = mysqli_query($connection, $query);
+
+		$row = mysqli_fetch_assoc($result);
+		if (is_array($row)) {
+			$timee = date('H:i');
+			echo  '	<form id="cancel_time" class="formBox formBox6 " action="./index.php?state=delete" method="post" style=" display: block;"> ';
+			echo '<input type="hidden" class="hid hid1"  value="1">';
+			echo ' <div class="header_time">
+		<h2 class="contact-form-title time_title"> בחר שעה לביטול</h2> 
+		<div class="vertical-line-1"></div>
+		</div> ';
+
+			echo '       
+		<div class="banner-info-single text">	
+		<a  href="#" class="delete-button" ></a>		
+		   <label class="days days_click"> יום שבת ' . $row["datee"] . '
+		      ' .  $row["timee"] . '
+		   </label>';
+			$timee = $row["timee"];
+
+			echo '
+		   <input type="hidden" name="delet1" value="' .  $_POST["phone1"] . '">
+		   <input type="hidden" name="delet2" value="' . $row["datee"] . '">
+		   <input type="hidden" name="delet3" value="' . $timee . '">
+		</div>
+								';
+			while ($row = mysqli_fetch_assoc($result)) {
+				$timee = $row["timee"];
+			//---------------------------מיותר??
+				echo '      														
+			<div class="banner-info-single text">
+			
+			<label class="days days_click"> יום שבת ' . $row["datee"] . '
+			' .  $row["timee"] . '
+					<a  href="#" class="delete-button" ></a>
+							   </label>
+							   <input type="hidden" name="delet1" value="' . $_POST["phone1"] . '">
+							   <input type="hidden" name="delet2" value="' . $row["datee"] . '">
+							   <input type="hidden" name="delet3" value="' . $timee . '">
+								</div>
+								';
+			}
+		/// ------------------------------------------------------------
+			echo	'</form>';
+		} else{
+		echo '<form id="alert_customer" class="formBox" action="./index.php" style="display:block;">
+	<input type="hidden" class="hid hid3"  value="1">
+		<label> אין עבורך תרים</label>
+		<div class="form-group">
+		<input type="submit" class="btn-contact" value="סיים" />
+	    </div>	
+		</form>';   
+		}  
+	}
+
+
 
 	?>
 	<!-- end pick  -->
@@ -449,13 +627,28 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						<p>לבירורים</p>
 					</div>
 				</div>
+				
+				
+				
 				<a href="#" id="boking">
-					<div class="col-md-4">
-						<div class="banner-info-single text">
+					<div class="col-md-4 ">
+						<div class="banner-info-single text b">
 
-							<div class="icon-box"><i class="fa  fa-calendar"></i></div>
-							<h3> הזמנת תור</h3>
-							<p class='viss'>0506655919</p>
+							<div class="icon-box mar-icon" ><i class="fa  fa-calendar-check-o"></i></div>
+							<p class='viss '>0506655919</p>
+							<h3 class='bb'> הזמנת תור</h3>
+
+							<p class='viss '>לבירורים</p>
+						</div>
+					</div>
+				</a>
+				<a href="#" id="cancel">
+					<div class="col-md-4">
+						<div class="banner-info-single text c">
+
+							<div class="icon-box mar-icon"><i class="fa  fa-calendar-times-o"></i></div>
+							<p class='viss '>0506655919</p>
+							<h3 class='cc'> ביטול תור</h3>
 
 							<p class='viss'>לבירורים</p>
 
@@ -463,7 +656,6 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 						</div>
 					</div>
 				</a>
-
 			</div>
 		</div>
 
@@ -471,41 +663,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	</section>
 	<!-- Banner Section Ends -->
 	<div id="toolsBlur" class="screenBlur"></div>
-	<!-- About us section starts -->
-	<section class="aboutus" id="about">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="main-title">
-						<h2>About Barber Shop</h2>
-					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<div class="about-image">
-						<div class="about-img-single">
-							<img src="images/about-1.jpg" alt="" />
-						</div>
-
-						<div class="about-img-single">
-							<img src="images/about-2.jpg" alt="" />
-						</div>
-
-						<div class="about-img-single">
-							<img src="images/about-3.jpg" alt="" />
-						</div>
-					</div>
-
-					<div class="about-desc">
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Why do we use it.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- About us section ends -->
 
 	<!-- Services section starts -->
 	<section class="service" id="service">
@@ -597,7 +755,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-1.jpg" alt="" />
+							<img src="images/p1.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -611,7 +769,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-2.jpg" alt="" />
+							<img src="images/p2.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -625,7 +783,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-3.jpg" alt="" />
+							<img src="images/p3.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -639,7 +797,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-4.jpg" alt="" />
+							<img src="images/p4.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -653,7 +811,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-5.jpg" alt="" />
+							<img src="images/p5.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -667,7 +825,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-6.jpg" alt="" />
+							<img src="images/p6.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -681,7 +839,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-7.jpg" alt="" />
+							<img src="images/p7.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -695,7 +853,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 				<div class="col-md-3 col-sm-4 col-xs-6">
 					<div class="gallery-box">
 						<figure>
-							<img src="images/gallery-8.jpg" alt="" />
+							<img src="images/p8.jpg" alt="" />
 						</figure>
 
 						<div class="gallery-overlay">
@@ -728,13 +886,13 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 					<div class="price-list">
 						<div class="price-item">תספורת גברים</div>
 						<div class="price-line"></div>
-						<div class="price-amount">20₪</div>
+						<div class="price-amount">25₪</div>
 					</div>
 
 					<div class="price-list">
 						<div class="price-item">תספורת ילדים</div>
 						<div class="price-line"></div>
-						<div class="price-amount">25₪</div>
+						<div class="price-amount">20₪</div>
 					</div>
 
 
@@ -754,241 +912,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 			</div>
 		</div>
 	</div>
-	<!-- Pricing Section ends -->
 
-	<!-- Testimonial section starts -->
-	<!-- <section class="testimonial" id="testimonial">
-		<div class="container">
-			 -->
-
-	<!-- <div class="row">
-				<div class="col-md-12">  -->
-	<!-- Header slider starts -->
-	<!-- <div class="owl-carousel owl-theme testimonial-slider" id="testimonial-slider">
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div>  -->
-
-	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Eric Gartner</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div> -->
-
-	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Jonty Roads</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div> -->
-
-	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Esha Gupta</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div> -->
-
-	<!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Eric Gartner</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div> -->
-	<!-- 
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Jonty Roads</h3>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="testimonial-single">
-								<div class="icon-box">
-									<i class="fa fa-quote-left"></i>
-								</div>
-
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.</p>
-								<h3>- Esha Gupta</h3>
-							</div>
-						</div> -->
-
-
-	<!-- </div> -->
-	<!-- Header slider ends -->
-	<!-- </div>  -->
-	<!-- </div> -->
-	<!-- </div>
-	</section>  -->
-	<!-- Testimonial section ends -->
-
-	<!-- Contactus section starts adminnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn form -->
-	<?php
-
-	if (isset($_GET["state"]) and $_GET["state"] == "zaheday" and !empty($_POST["user"])) {
-		$query1  = "SELECT * FROM users WHERE username='"
-		. $_POST["user"] . "' and password='"
-		. $_POST["pass"] . "'  ";
-		$result = mysqli_query($connection, $query1);
-		$row1 = mysqli_fetch_assoc($result);
-		if (is_array($row1)) {
-			
-			$conter = 0;
-			$today = date("Y-m-d");
-			echo'<section class="testimonial" id="testimonial">
-			<div class="container">';
-			
-			
-			echo '<form id="zahe_day"  action="./index.php?state=zahetime" method="POST" style=" display: block;">
-			<div class="row no-pad">
-				<div class="col-md-12">
-					<div class="main-title">
-					<h2>  שלום זאהי דקה</h2>
-					<h2> בחר יום</h2>
-				
-					</div>
-				</div>
-			</div>';
-			
-			echo '<div class="vertical-line-1"></div>';
-		
-
-			while (++$conter != 8) {
-				$today1 = getWeekday($today);
-				switch ($today1) {
-					case 0:
-						echo ' 
-						
-						
-			<div class="banner-info-single text days_click">
-			<label class="days days_click"> יום ראשון<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-			
-			';
-						break;
-					case 1:
-						echo ' 
-			<div class="banner-info-single text days_click">
-			
-			<label class="days days_click"> יום שני<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-			
-			';
-						break;
-					case 2:
-						$today++;
-						break;
-
-					case 3:
-						echo ' 
-			<div class="banner-info-single text days_click">
-			
-			<label class="days days_click"> יום רביעי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-			
-			';
-
-						break;
-					case 4:
-						echo ' 
-			<div class="banner-info-single text days_click">
-			
-			<label class="days days_click"> יום חמישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-			
-			';
-
-						break;
-					case 5:
-						echo ' 
-			<div class="banner-info-single text days_click">
-			
-			<label class="days days_click"> יום שישי<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-			
-			';
-
-						break;
-					case 6:
-						echo ' 
-				<div class="banner-info-single text days_click">
-				
-				<label class="days days_click"> יום שבת<input type="submit" class="buton" name="zahe_day" value="' . ($today++) . '">
-			   </label>
-			</div>
-				
-				</div>
-				
-				';
-						break;
-				}
-			}
-			echo '</form>';
-			echo '		</div>
-			</section>';
-		}
-	}
-	if (isset($_GET["state"]) && $_GET["state"] == "zahetime" && !empty($_POST["zahe_day"])) {
-		// echo '<form id="back_arroww"  action="./index.php?state=zaheday" method="post" ">';
-		// echo '  <input type="hidden" name="phone" value="' . $_POST["phon"] . '"> ';
-		// echo '</form>';
-
-		echo '<form id="zahe_day" class=" formBox" action="./admin.php?state=zahetime" method="POST" style=" display: block;">
-
-		<h2 class="contact-form-title">  הזמנות של יום:' . $_POST["zahe_day"] . '</h2>
-		<a  href="./admin.php?state=zaheday" id="back-arroww" ></a>
-		<label>שלום זאהי דקה </label> ';
-		echo '<div class="vertical-line-1"></div>';
-
-		echo '<div class="vertical-line-1"></div>';
-		$query  = "SELECT * FROM orders  where datee='"
-			. $_POST["zahe_day"] . "'  ";
-		$result = mysqli_query($connection, $query);
-		while ($row = mysqli_fetch_assoc($result)) {
-			$query1  = "SELECT * FROM customers  where phone='"
-				. $row["phone"] . "'  ";
-			$result1 = mysqli_query($connection, $query1);
-			$row1 = mysqli_fetch_assoc($result1);
-			$dateTime = date('H:i', strtotime($row["timee"]));
-
-			echo ' 
-				<div class="banner-info-single text days_click">
-				
-				<label>  שם: ' . $row1["name"] . ' </label>
-				<label> ' . $row1["phone"] . ':מספר טלפון</label>
-				<label> ' . $dateTime . ' :זמן</label>
-			</div>
-				
-				
-				
-				';
-		}
-	}
-
-	?>
 
 	<!-- Contactus section ends -->
 
@@ -997,12 +921,8 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 			<div class="row">
 				<div class="col-md-12">
 					<div class="footer-social">
-						<a href="#">Facebook</a>
-						<a href="#">Twitter</a>
-						<a href="#">Instagram</a>
-						<a href="#">Pinterest</a>
-						<a href="#">Googleplus</a>
-						<a href="#">Linkedin</a>
+						<a href="https://www.facebook.com/zahe.daka.1" target="_blank">Facebook</a>
+						<a href="https://www.instagram.com/zahedaka/" target="_blank">Instagram</a>
 					</div>
 
 					<div class="site-info">
@@ -1012,14 +932,11 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 
 					<div class="footer-menu">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">About</a></li>
-							<li><a href="#">Services</a></li>
-							<li><a href="#">Team</a></li>
-							<li><a href="#">Gallery</a></li>
-							<li><a href="#">Pricing</a></li>
-							<li><a href="#">Testimonial</a></li>
-							<li><a href="#">Contact</a></li>
+						<li><a href="#">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#service">Service</a></li>
+						<li><a href="#gallery">Gallery</a></li>
+						<li><a href="#pricing">Pricing</a></li>
 						</ul>
 					</div>
 				</div>
@@ -1035,6 +952,7 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Slick Nav js file -->
 	<script src="js/jquery.slicknav.js"></script>
+
 	<!-- Owl Carousel js file -->
 	<script src="js/owl.carousel.js"></script>
 	<!-- Main Custom js file -->
@@ -1046,3 +964,9 @@ if (isset($_GET["state"]) and $_GET["state"] == "add" && !empty($_POST["dat"]) &
 </body>
 
 </html>
+
+
+<?php
+	//close DB connection
+	mysqli_close($connection);
+?>
